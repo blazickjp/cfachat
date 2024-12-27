@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Brain, MessageSquare, Zap } from 'lucide-react';
+import ParticleField from './ParticleField';
 
 const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -7,7 +8,6 @@ const LandingPage = () => {
   const [displayText, setDisplayText] = useState('');
   const [gradientPosition, setGradientPosition] = useState({ x: 0, y: 0 });
   
-  // Handle scroll effects
   useEffect(() => {
     const handleScroll = () => {
       setScrollOffset(window.pageYOffset);
@@ -17,11 +17,9 @@ const LandingPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle initial animation
   useEffect(() => {
     setIsVisible(true);
     
-    // Animate the subtext
     const text = "Study smarter, not harder.";
     let currentIndex = 0;
     const interval = setInterval(() => {
@@ -45,14 +43,7 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-zinc-900 to-zinc-800 text-white overflow-hidden">
-      {/* Animated background gradient */}
-      <div 
-        className="fixed inset-0 opacity-20 pointer-events-none"
-        style={{
-          background: `radial-gradient(circle at ${gradientPosition.x}% ${gradientPosition.y}%, rgba(168,85,247,0.1) 0%, transparent 60%)`,
-          transition: 'background 0.3s ease'
-        }}
-      />
+      <ParticleField />
 
       {/* Navigation */}
       <nav className="p-6 relative z-10">
@@ -84,24 +75,30 @@ const LandingPage = () => {
       {/* Hero Section */}
       <main className="max-w-6xl mx-auto px-6 py-20 relative z-10">
         <div className="text-center">
-          <span 
-            className="text-purple-400 font-medium text-lg mb-4 block transform transition-all duration-500"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transform: `translateY(${isVisible ? 0 : '20px'})`
-            }}
-          >
-            Not Your Regular Study Tool
-          </span>
-          <h1 
-            className="text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-cyan-300 to-white bg-clip-text text-transparent"
-            style={{ transform: `translateY(${scrollOffset * 0.2}px)` }}
-          >
-            Crush the CFA® Exam
-          </h1>
-          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            {displayText}
-          </p>
+          <div className="h-8 mb-4"> {/* Height container for subtitle */}
+            <span 
+              className="text-purple-400 font-medium text-lg block transform transition-all duration-500"
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: `translateY(${isVisible ? 0 : '20px'})`
+              }}
+            >
+              Not Your Regular Study Tool
+            </span>
+          </div>
+          <div className="h-24 mb-6"> {/* Height container for main heading */}
+            <h1 
+              className="text-6xl font-bold bg-gradient-to-r from-purple-400 via-cyan-300 to-white bg-clip-text text-transparent"
+              style={{ transform: `translateY(${scrollOffset * 0.2}px)` }}
+            >
+              Crush the CFA® Exam
+            </h1>
+          </div>
+          <div className="h-7 mb-12"> {/* Height container for typewriter text */}
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              {displayText}
+            </p>
+          </div>
           <button 
             className="group px-8 py-4 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded text-lg font-semibold relative overflow-hidden"
             onMouseMove={handleMouseMove}
@@ -119,6 +116,7 @@ const LandingPage = () => {
           </button>
         </div>
       </main>
+
 
       {/* Features Section */}
       <section className="max-w-6xl mx-auto px-6 py-20 relative z-10">
@@ -156,32 +154,6 @@ const LandingPage = () => {
               </p>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Social Proof with Frosted Glass Effect */}
-      <section className="max-w-6xl mx-auto px-6 py-12 relative z-10">
-        <div 
-          className="text-center p-8 bg-zinc-800/30 backdrop-blur rounded-xl border border-zinc-700/50"
-          style={{
-            transform: `translateY(${scrollOffset * 0.1}px)`
-          }}
-        >
-          <p className="text-sm uppercase tracking-wider mb-4 text-gray-400">Trusted by professionals from</p>
-          <div className="flex flex-wrap justify-center gap-x-12 gap-y-4">
-            {["Goldman Sachs", "JPMorgan", "BlackRock", "Morgan Stanley"].map((company, index) => (
-              <span 
-                key={company}
-                className="text-lg font-semibold text-white opacity-0 animate-fade-in"
-                style={{ 
-                  animationDelay: `${index * 200}ms`,
-                  animationFillMode: 'forwards'
-                }}
-              >
-                {company}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
 
